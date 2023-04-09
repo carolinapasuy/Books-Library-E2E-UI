@@ -1,0 +1,25 @@
+{
+  "name": "books-library-e2e-ui",
+  "version": "1.0.0",
+  "description": "This is a workshop about e2e",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carolinapasuy/Books-Library-E2E-UI.git"
+  },
+  "keywords": [
+    "ui-testing",
+    "dojo",
+    "practice",
+    "cypress"
+  ],
+  "author": "Carolina Pasuy <carolina.pasuy@segurosbolivar.com> ([carolinapasuy])",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carolinapasuy/Books-Library-E2E-UI/issues"
+  },
+  "homepage": "https://github.com/carolinapasuy/Books-Library-E2E-UI#readme"
+}
