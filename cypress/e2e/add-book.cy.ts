@@ -11,17 +11,17 @@ describe("Verifying add book process for Library dashboard", () => {
         dashboardPage.addBook();
     });
    describe("Negative cases", () => {
-        it("A book should not be created with an empty space name and author.", () => {
+        it("BUG: A book should not be created with an empty space name and author.", () => {
             bookPage.saveInfoBook(" ", " ");
             bookPage.saveBook().should('be.disabled');
         });
 
-        it("A book should not be created with an empty space author.", () => {
+        it("BUG: A book should not be created with an empty space author.", () => {
             bookPage.saveInfoBook("El mapa de los anhelos", " ");
             bookPage.saveBook().should('be.disabled');
         });
 
-        it("A book should not be created with an empty space name.", () => {
+        it("BUG: A book should not be created with an empty space name.", () => {
             bookPage.saveInfoBook(" ", "Alice Kellen");
             bookPage.saveBook().should('be.disabled');
         });
