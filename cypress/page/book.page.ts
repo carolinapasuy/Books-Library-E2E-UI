@@ -19,8 +19,24 @@ class BookPage {
         cy.get(this.authorBookButton).type(author);
     }
 
+    public updateInfoBook(name?: string, author?: string) {
+        if (name) {
+            cy.get(this.nameBookButton).clear();
+            cy.get(this.nameBookButton).type(name);
+        }
+        if (author) {
+            cy.get(this.authorBookButton).clear();
+            cy.get(this.authorBookButton).type(author);
+        }
+    }
+
     public cancelBook() {
         return cy.get(this.cancelBookButton).click();
+    }
+
+    public clearInputs() {
+        cy.get(this.nameBookButton).clear();
+        cy.get(this.authorBookButton).clear();
     }
 }
 
