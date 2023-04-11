@@ -32,19 +32,13 @@ describe("Verifying add book process for Library dashboard", () => {
             bookPage.saveInfoBook("El mapa de los anhelos", "Alice Kellen");
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
-            dashboardPage.getRowsTable()
-            .contains('.ant-table-cell', 'El mapa de los anhelos') 
-            .parent() 
-            .contains('.ant-table-cell', 'Alice Kellen') 
+
+            dashboardPage.verifyBookTitleAndAuthor("El mapa de los anhelos", "Alice Kellen");
+           
         });
 
         after(() => {
-            dashboardPage.getRowsTable()
-                .contains('td', 'El mapa de los anhelos')
-                .parent()
-                .find('[type="checkbox"]')
-                .check();
-
+            dashboardPage.verifyBookInDashboard("El mapa de los anhelos")
             dashboardPage.deleteButton();
         });
         
