@@ -11,8 +11,13 @@ describe("Verifying add book process for Library dashboard", () => {
         cy.visit("http://localhost:4200/dashboard");
         dashboardPage= new DashboardPage();
         bookPage= new BookPage();
-        dashboardPage.getBookToEditFirstButton()
+        dashboardPage.addBook();
+        bookPage.saveInfoBook("El mapa de los anhelos", "Alice Kellen");
+        bookPage.saveBook().click();
 
+        dashboardPage.changePaginationSize("50 / page");
+
+        dashboardPage.clickEditBook("El mapa de los anhelos")
     });
 
     describe("Negative cases", () => { 
@@ -34,6 +39,11 @@ describe("Verifying add book process for Library dashboard", () => {
             bookPage.updateInfoBook(" ", "Alice Kellen");
             bookPage.saveBook().should('be.disabled');
         });
+
+        afterEach(() => {
+            dashboardPage.verifyBookInDashboard("El mapa de los anhelos")
+            dashboardPage.deleteButton();
+        });
         
     });
 
@@ -48,14 +58,19 @@ describe("Verifying add book process for Library dashboard", () => {
         });
 
         it("The name and author book should be edited.", () => {
-            bookPage.updateInfoBook("El mapa de los anhelos", "Alice Kellenn");
+            bookPage.updateInfoBook("El mapa de los besos", "Alice Swift");
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
-            dashboardPage.getRowsTable()
-            .contains('.ant-table-cell', 'El mapa de los anhelos') 
-            .parent() 
-            .contains('.ant-table-cell', 'Alice Kellen') 
 
+            dashboardPage.verifyBookTitleAndAuthor("El mapa de los besos", "Alice Swift");
+            dashboardPage.getRowsTable()
+            .should("not.have.text", nametoUpdate)
+
+        });
+
+        after(() => {
+            dashboardPage.verifyBookInDashboard("El mapa de los besos")
+            dashboardPage.deleteButton();
         });
 
         it("The name's book should be edited.", () => {
@@ -63,9 +78,14 @@ describe("Verifying add book process for Library dashboard", () => {
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
 
-            dashboardPage.getFirstRowTable()
+            dashboardPage.getRowsTable()
             .should("not.have.text", nametoUpdate)
 
+        });
+
+        after(() => {
+            dashboardPage.verifyBookInDashboard("23 otoños antes de ti")
+            dashboardPage.deleteButton();
         });
 
         it("The author's book should be edited.", () => {
@@ -73,9 +93,13 @@ describe("Verifying add book process for Library dashboard", () => {
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
            
-            dashboardPage.getFirstRowTable()
+            dashboardPage.getRowsTable()
             .should("not.have.text", authortoUpdate)
         });
         
+        after(() => {
+            dashboardPage.verifyBookInDashboard("El mapa de los anhelos")
+            dashboardPage.deleteButton();
+        });
     });
 });

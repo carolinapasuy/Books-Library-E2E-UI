@@ -27,9 +27,11 @@ class DashboardPage {
   public addBook() {
     cy.get(this.addBookButton).click();
   }
+  
   public deleteButton() {
     return cy.get(this.deleteBookButton).click();
   }
+  
   public getBooksForPageButton() {
     return cy.get(this.booksForPageButton).click();
   }
@@ -37,14 +39,26 @@ class DashboardPage {
   public getRowsTable() {
     return cy.get(this.rowsTable);
   }
+  
   public getBookToEditFirstButton() {
     cy.get(this.editBookButton).eq(0).click();
-
-    cy.wait(1000);
+  }
+  
+  public changePaginationSize(size: string) {
+    cy.get(this.paginationSizeChanger).click();
+    const newSize = this.paginationSizeOption + `:contains("${size}")`;
+    cy.get(newSize).click();
   }
 
-  public getFirstRowTable() {
-    return cy.get(this.rowsTable).eq(0);
+  public getRowsTable() {
+    return cy.get(this.rowsTable);
+  }
+
+  public verifyBookTitleAndAuthor(title: string, author: string){  
+    this.getRowsTable()
+    .get(".ant-table-cell")
+    .should("contain", title)
+    .and("contain", author);
   }
 
   public changePage(number: number) {
@@ -57,14 +71,27 @@ class DashboardPage {
     const newSize = this.paginationSizeOption + `:contains("${size}")`;
     cy.get(newSize).click();
   }
-
-  public verifyBookTitleAndAuthor(title: string, author: string){
+  
+    public verifyBookInDashboard(title: string){   
+        this.getRowsTable()
+        .contains('td', title)
+        .parent()
+        .find('[type="checkbox"]')
+        .check();
+    }
     
-          this.getRowsTable()
-          .get(".ant-table-cell")
-          .should("contain", title)
-          .and("contain", author);
-  }
+    public clickEditBook(title: string){   
+        this.getRowsTable()
+        .contains('td', title)
+        .parent()
+        .find('.anticon-edit')
+        .click();
+    }
+
+    public getFirstRowTable() {
+        return cy.get(this.rowsTable)
+        .eq(0);
+    }
 }
 
 export { DashboardPage };
