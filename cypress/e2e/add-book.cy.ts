@@ -10,7 +10,7 @@ describe("Verifying add book process for Library dashboard", () => {
         bookPage= new BookPage();
         dashboardPage.addBook();
     });
-   describe("Negative cases", () => {
+   describe("Unhappy paths", () => {
         it("BUG: A book should not be created with an empty space name and author.", () => {
             bookPage.saveInfoBook(" ", " ");
             bookPage.saveBook().should('be.disabled');
@@ -27,17 +27,20 @@ describe("Verifying add book process for Library dashboard", () => {
         });
         
     });
-    describe("Positive cases", () => {
+    describe("Happy paths", () => {
         it("The book should be added.", () => {
             bookPage.saveInfoBook("El mapa de los anhelos", "Alice Kellen");
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
-            dashboardPage.getRowsTable()
-            .contains('.ant-table-cell', 'El mapa de los anhelos') 
-            .parent() 
-            .contains('.ant-table-cell', 'Alice Kellen') 
+
+            dashboardPage.verifyBookTitleAndAuthor("El mapa de los anhelos", "Alice Kellen");
+           
         });
 
+        after(() => {
+            dashboardPage.verifyBookInDashboard("El mapa de los anhelos")
+            dashboardPage.deleteButton();
+        });
         
     });
 
