@@ -43,16 +43,6 @@ class DashboardPage {
   public getBookToEditFirstButton() {
     cy.get(this.editBookButton).eq(0).click();
   }
-  
-  public changePaginationSize(size: string) {
-    cy.get(this.paginationSizeChanger).click();
-    const newSize = this.paginationSizeOption + `:contains("${size}")`;
-    cy.get(newSize).click();
-  }
-
-  public getRowsTable() {
-    return cy.get(this.rowsTable);
-  }
 
   public verifyBookTitleAndAuthor(title: string, author: string){  
     this.getRowsTable()
