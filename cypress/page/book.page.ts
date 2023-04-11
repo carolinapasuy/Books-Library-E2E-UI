@@ -16,6 +16,7 @@ class BookPage {
     }
     public saveInfoBook(name: string, author: string) {
         cy.get(this.nameBookButton).type(name);
+        cy.wait(1000);
         cy.get(this.authorBookButton).type(author);
     }
 
