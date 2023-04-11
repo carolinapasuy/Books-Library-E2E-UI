@@ -20,28 +20,17 @@ describe("Verifying read book process for Library dashboard", () => {
 
   describe("Positive cases", () => {
     it("Reading first book on page 1", () => {
-      dashboardPage
-        .getFirstRowTable()
-        .contains(".ant-table-cell", "23 otoños antes de ti")
-        .parent()
-        .contains(".ant-table-cell", "Elísabet Benavent");
+        dashboardPage.verifyBookTitleAndAuthor("23 otoños antes de ti","Elísabet Benavent");
+
     });
 
     it("Reading a book on page 1", () => {
-      dashboardPage
-        .getRowsTable()
-        .contains(".ant-table-cell", "Programming Pearls")
-        .parent()
-        .contains(".ant-table-cell", "Jon Bentley");
+        dashboardPage.verifyBookTitleAndAuthor("Programming Pearls","Jon Bentley");
     });
 
     it("Reading a book on page 3", () => {
         dashboardPage.changePage(3);
-        dashboardPage
-        .getRowsTable()
-        .contains(".ant-table-cell", "El mapa de los anhelos")
-        .parent()
-        .contains(".ant-table-cell", "Alice Kellen");
+        dashboardPage.verifyBookTitleAndAuthor("El mapa de los anhelos","Alice Kellen");
     });
 
     it("Loads 10 books on pagination size 10", () =>{
