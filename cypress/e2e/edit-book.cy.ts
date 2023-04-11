@@ -11,8 +11,17 @@ describe("Verifying add book process for Library dashboard", () => {
         cy.visit("http://localhost:4200/dashboard");
         dashboardPage= new DashboardPage();
         bookPage= new BookPage();
-        dashboardPage.getBookToEditFirstButton()
+        dashboardPage.addBook();
+        bookPage.saveInfoBook("El mapa de los anhelos", "Alice Kellen");
+        bookPage.saveBook().click();
 
+        dashboardPage.changePaginationSize("50 / page");
+
+        dashboardPage.getRowsTable()
+                .contains('td', 'El mapa de los anhelos')
+                .parent()
+                .find('.anticon-edit')
+                .click();
     });
 
     describe("Negative cases", () => { 
@@ -33,6 +42,16 @@ describe("Verifying add book process for Library dashboard", () => {
         it("BUG: A book should not be edited with an empty space name", () => {           
             bookPage.updateInfoBook(" ", "Alice Kellen");
             bookPage.saveBook().should('be.disabled');
+        });
+
+        afterEach(() => {
+            dashboardPage.getRowsTable()
+                .contains('td', 'El mapa de los anhelos')
+                .parent()
+                .find('[type="checkbox"]')
+                .check();
+
+            dashboardPage.deleteButton();
         });
         
     });
@@ -63,7 +82,7 @@ describe("Verifying add book process for Library dashboard", () => {
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
 
-            dashboardPage.getFirstRowTable()
+            dashboardPage.getRowsTable()
             .should("not.have.text", nametoUpdate)
 
         });
@@ -73,9 +92,18 @@ describe("Verifying add book process for Library dashboard", () => {
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
            
-            dashboardPage.getFirstRowTable()
+            dashboardPage.getRowsTable()
             .should("not.have.text", authortoUpdate)
         });
         
+        afterEach(() => {
+            dashboardPage.getRowsTable()
+                .contains('td', 'El mapa de los anhelos')
+                .parent()
+                .find('[type="checkbox"]')
+                .check();
+
+            dashboardPage.deleteButton();
+        });
     });
 });
