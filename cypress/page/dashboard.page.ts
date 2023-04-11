@@ -11,7 +11,8 @@ class DashboardPage {
   constructor() {
     this.addBookButton = '.ant-btn-primary > .ng-star-inserted:contains("Add")';
     this.deleteBookButton =
-      'div[_ngcontent-uqy-c73] > .ant-btn-primary > .ng-star-inserted:contains("Delete")';
+      // 'div[_ngcontent-uqy-c73] > .ant-btn-primary > .ng-star-inserted:contains("Delete")';
+      '.ant-btn.table-button > .ng-star-inserted:contains("Delete")';
     this.booksForPageButton =
       '.ant-select-selection-item.ng-star-inserted[ng-reflect-label="50 / page"]';
     this.rowsTable = ".ant-table-tbody > .ant-table-row.ng-star-inserted";
