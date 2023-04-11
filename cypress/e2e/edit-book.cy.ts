@@ -17,11 +17,7 @@ describe("Verifying add book process for Library dashboard", () => {
 
         dashboardPage.changePaginationSize("50 / page");
 
-        dashboardPage.getRowsTable()
-                .contains('td', 'El mapa de los anhelos')
-                .parent()
-                .find('.anticon-edit')
-                .click();
+        dashboardPage.clickEditBook("El mapa de los anhelos")
     });
 
     describe("Negative cases", () => { 
@@ -45,12 +41,7 @@ describe("Verifying add book process for Library dashboard", () => {
         });
 
         afterEach(() => {
-            dashboardPage.getRowsTable()
-                .contains('td', 'El mapa de los anhelos')
-                .parent()
-                .find('[type="checkbox"]')
-                .check();
-
+            dashboardPage.verifyBookInDashboard("El mapa de los anhelos")
             dashboardPage.deleteButton();
         });
         
@@ -67,14 +58,19 @@ describe("Verifying add book process for Library dashboard", () => {
         });
 
         it("The name and author book should be edited.", () => {
-            bookPage.updateInfoBook("El mapa de los anhelos", "Alice Kellenn");
+            bookPage.updateInfoBook("El mapa de los besos", "Alice Swift");
             bookPage.saveBook().should('be.enabled');
             bookPage.saveBook().click();
-            dashboardPage.getRowsTable()
-            .contains('.ant-table-cell', 'El mapa de los anhelos') 
-            .parent() 
-            .contains('.ant-table-cell', 'Alice Kellen') 
 
+            dashboardPage.verifyBookTitleAndAuthor("El mapa de los besos", "Alice Swift");
+            dashboardPage.getRowsTable()
+            .should("not.have.text", nametoUpdate)
+
+        });
+
+        after(() => {
+            dashboardPage.verifyBookInDashboard("El mapa de los besos")
+            dashboardPage.deleteButton();
         });
 
         it("The name's book should be edited.", () => {
@@ -87,6 +83,11 @@ describe("Verifying add book process for Library dashboard", () => {
 
         });
 
+        after(() => {
+            dashboardPage.verifyBookInDashboard("23 otoños antes de ti")
+            dashboardPage.deleteButton();
+        });
+
         it("The author's book should be edited.", () => {
             bookPage.updateInfoBook(undefined,"Elísabet Benavent");
             bookPage.saveBook().should('be.enabled');
@@ -96,13 +97,8 @@ describe("Verifying add book process for Library dashboard", () => {
             .should("not.have.text", authortoUpdate)
         });
         
-        afterEach(() => {
-            dashboardPage.getRowsTable()
-                .contains('td', 'El mapa de los anhelos')
-                .parent()
-                .find('[type="checkbox"]')
-                .check();
-
+        after(() => {
+            dashboardPage.verifyBookInDashboard("El mapa de los anhelos")
             dashboardPage.deleteButton();
         });
     });
